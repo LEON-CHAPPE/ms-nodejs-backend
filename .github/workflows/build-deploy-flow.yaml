@@ -1,0 +1,36 @@
+name: Build and Deploy Flow
+
+on:
+  workflow_dispatch:
+    inputs:
+      ambiente:
+        description: 'ambiente'
+        required: true
+        type: choice
+        options:
+          - dev
+          - qa
+          - prd
+        default: 'dev'
+      nombre_aplicacion:
+        description: 'nombre aplicación'
+        required: true
+        type: string
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1
+        run: echo "Construyendo app ${{ inputs.nombre_aplicacion }}"
+      - name: Step 2
+        run: echo "App ${{ inputs.nombre_aplicacion }} construida"
+
+  Deploy:
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1
+        run: echo "Desplegando en ambiente ${{ inputs.ambiente }}"
+      - name: Step 2
+        run: echo "Aplicación ${{ inputs.nombre_aplicacion }} desplegada en ${{ inputs.ambiente }}"
